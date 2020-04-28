@@ -1,4 +1,4 @@
-// BEGIN AUTOFOLD
+// BEGIN AUTOFOLD {{{
 	/*NOSUCHFILE
 	cat
 	// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars
@@ -98,7 +98,7 @@
 	const int e6=e3*e3;
 	const int e9=e6*e3;
 	const long double tau=2*acosl(-1);
-// END AUTOFOLD
+// END AUTOFOLD }}}
 // #include <bits/extc++.h>
 // using namespace __gnu_pbds;
 #define dbg _gbd
