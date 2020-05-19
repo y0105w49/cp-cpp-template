@@ -22,10 +22,10 @@
 		template<class T> ostream &_gbd3(ostream &os,const T &x) {
 			return _gbd3C<T>::call(os,x);
 		}
-		ostream &_gbd4(ostream &os,const string &x) {
+		template<> ostream &_gbd3(ostream &os,const string &x) {
 			return os<<'"'<<x<<'"';
 		}
-		ostream &_gbd4(ostream &os,char *const &x) {
+		template<> ostream &_gbd3(ostream &os,char *const &x) {
 			return os<<'"'<<x<<'"';
 		}
 		template<class A,class B>
