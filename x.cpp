@@ -28,6 +28,9 @@
 		template<> ostream &_gbd3(ostream &os,char *const &x) {
 			return os<<'"'<<x<<'"';
 		}
+		template<class T> ostream &_gbd35(ostream &os,const T &x) {
+			return _gbd3(os,x);  // why??
+		}
 		template<class A,class B>
 		ostream &_gbd4(ostream &os,const pair<A,B> &p) {
 			_gbd3(os<<'(',p.first);
@@ -42,7 +45,7 @@
 			static ostream &call(ostream &os,eit<is_iterable<U>::value,const T> &V) {
 				os<<"{";
 				bool ff=0;
-				for(const auto &E:V) _gbd3<decltype(E)>(ff?os<<",":os,E), ff=1;
+				for(const auto &E:V) _gbd35<decltype(E)>(ff?os<<",":os,E), ff=1;
 				return os<<"}";
 			}
 			template<class U=T>
@@ -50,15 +53,15 @@
 				return _gbd4(os,x);
 			}
 		};
-		template<class T,typename... Args> ostream &_gbd2(ostream &os,vector<string>::iterator nm,const T &x,Args&&... args);
-		ostream &_gbd2(ostream &os,vector<string>::iterator) { return os; }
+		template<class T,typename... Args> ostream &_gbd2(ostream &os,bool,vector<string>::iterator nm,const T &x,Args&&... args);
+		ostream &_gbd2(ostream &os,bool,vector<string>::iterator) { return os; }
 		template<typename... Args>
-		ostream &_gbd2(ostream &os,vector<string>::iterator nm,const char *x,Args&&... args) {
-			return _gbd2(os<<"  "<<x,nm+1,args...);
+		ostream &_gbd2(ostream &os,bool fi,vector<string>::iterator nm,const char *x,Args&&... args) {
+			return _gbd2(os<<(fi?"":"  ")<<x,0,nm+1,args...);
 		}
 		template<class T,typename... Args>
-		ostream &_gbd2(ostream &os,vector<string>::iterator nm,const T &x,Args&&... args) {
-			return _gbd2(_gbd3<T>(os<<"  "<<*nm<<"=",x),nm+1,args...);
+		ostream &_gbd2(ostream &os,bool fi,vector<string>::iterator nm,const T &x,Args&&... args) {
+			return _gbd2(_gbd3<T>(os<<(fi?"":"  ")<<*nm<<"=",x),0,nm+1,args...);
 		}
 		vector<string> split(string s) {
 			vector<string> Z;
@@ -73,13 +76,17 @@
 			}
 			return Z;
 		}
-		template<typename... Args> ostream &_gbd1(int ln,const string &nm,Args&&... args) {
-			auto nms=split(nm);
-			_gbd2(cerr<<"L"<<ln<<":",nms.begin(),args...);
-			return cerr<<endl;
+		template<typename... Args> ostream &_gbd1(ostream &os,const string &nm,Args&&... args) {
+			return _gbd2(os,1,split(nm).begin(),args...);
+		}
+		template<typename... Args> string _gbd1(const string &nm,Args&&... args) {
+			ostringstream oss;
+			_gbd2(oss,1,split(nm).begin(),args...);
+			return oss.str();
 		}
 	}
-	#define _gbd(...) gbd_ns::_gbd1(__LINE__,#__VA_ARGS__,__VA_ARGS__)
+	#define _gbd(...) gbd_ns::_gbd1(cerr<<"L"<<__LINE__<<":  ",#__VA_ARGS__,__VA_ARGS__)<<endl
+	#define fmt(...) gbd_ns::_gbd1(#__VA_ARGS__,__VA_ARGS__)
 	#ifdef ARST
 	#define QQ
 	#else
