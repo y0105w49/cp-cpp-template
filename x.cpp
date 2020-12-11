@@ -92,6 +92,16 @@
 	#else
 	#define OJ
 	#endif
+	template<class Fun> struct _y_combinator_result {
+		Fun _fun;
+		template<class T> explicit _y_combinator_result(T &&fun) : _fun(std::forward<T>(fun)) {}
+		template<typename... Args> decltype(auto) operator()(Args &&... args) {
+			return _fun(std::ref(*this),std::forward<Args>(args)...);
+		}
+	};
+	template<class Fun> decltype(auto) FIX(Fun &&fun) {
+		return _y_combinator_result<std::decay_t<Fun>>(std::forward<Fun>(fun));
+	}
 	inline void nop() {}
 	#define sz(x) (int((x).size()))
 	#define eprintf(...) fprintf(stderr,__VA_ARGS__)
@@ -100,7 +110,7 @@
 	#define pb push_back
 	#define OMAP(S,T) tree<S,T,less<S>,rb_tree_tag,tree_order_statistics_node_update>
 	#define OSET(S) OMAP(S,null_type)
-	#define all_(v) begin(v),end(v)
+	#define all(v) begin(v),end(v)
 	const int e3=1000;
 	const int e6=e3*e3;
 	const int e9=e6*e3;
@@ -131,12 +141,6 @@ const int P=e9+7;
 
 
 
-int32_t main() { // CURSOR START
+int32_t main() { /* CURSOR START */
 	
 }
-
-
-
-
-
-
