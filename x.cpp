@@ -84,12 +84,14 @@ namespace gbd_ns {
 		return oss.str();
 	}
 }
-#define _gbd(...) gbd_ns::_gbd1(cerr<<"L"<<__LINE__<<":  ",#__VA_ARGS__,__VA_ARGS__)<<endl
+#define _gbd(...) gbd_ns::_gbd1(cerr<<__FILE__<<":"<<__LINE__<<":  ",#__VA_ARGS__,__VA_ARGS__)<<endl
 #define fmt(...) gbd_ns::_gbd1(#__VA_ARGS__,__VA_ARGS__)
 #ifdef ARST
-#define QQ
+#define JO 1
+#define OJ 0
 #else
-#define OJ
+#define JO 0
+#define OJ 1
 #endif
 template<class Fun> struct _y_combinator_result {
 	Fun _fun;
@@ -107,18 +109,23 @@ inline void nop() {}
 #define fi first
 #define se second
 #define pb push_back
+#define eb emplace_back
 #define OMAP(S,T) tree<S,T,less<S>,rb_tree_tag,tree_order_statistics_node_update>
 #define OSET(S) OMAP(S,null_type)
 #define all(v) begin(v),end(v)
-const int e3=1000;
-const int e6=e3*e3;
-const int e9=e6*e3;
+#define sortu(v) (sort(all(v)), (v).resize(unique(all(v))-begin(v)))
+const int e0=1, e1=10, e2=100, e3=1000;
+const int e4=10*e3, e5=100*e3, e6=1000*e3;
+const int e7=10*e6, e8=100*e6, e9=1000*e6;
 const long double tau=2*acosl(-1);
 // END AUTOFOLD }}}
 // #include <bits/extc++.h>
 // using namespace __gnu_pbds;
+#if OJ
+#define dbg(...) cerr
+#else
 #define dbg _gbd
-// #define dbg(...) cerr
+#endif
 typedef __uint128_t ulll;
 typedef __int128_t lll;
 typedef unsigned long long ull;
