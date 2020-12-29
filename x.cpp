@@ -4,7 +4,8 @@
   // sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars
   // ayy lamo
   */
-#include <bits/stdc++.h>
+// #include <bits/stdc++.h>
+#include <bits/extc++.h>
 using namespace std;
 namespace gbd_ns {
 	template<typename C>
@@ -36,6 +37,25 @@ namespace gbd_ns {
 		_gbd3(os<<',',p.second);
 		return os<<')';
 	}
+	template<class T,size_t N> struct _gbd4_tupleC {
+		static void call(ostream &os,const T &t) {
+			_gbd4_tupleC<T,N-1>::call(os,t);
+			os<<','<<get<N-1>(t);
+		}
+	};
+	template<class T> struct _gbd4_tupleC<T,1> {
+		static void call(ostream &os,const T &t) {
+			os<<get<0>(t);
+		}
+	};
+	template<typename... Types>
+	ostream &_gbd4(ostream &os,const tuple<Types...> &t) {
+		os<<'(';
+		_gbd4_tupleC<tuple<Types...>,sizeof...(Types)>::call(os,t);
+		return os<<')';
+	}
+	template<>
+	ostream &_gbd4(ostream &os,const tuple<> &t) { (void)t; return os<<"()"; }
 	template<class T> ostream &_gbd4(ostream &os,const T &x) {
 		return os<<x;
 	}
@@ -110,33 +130,30 @@ inline void nop() {}
 #define se second
 #define pb push_back
 #define eb emplace_back
-#define OMAP(S,T) tree<S,T,less<S>,rb_tree_tag,tree_order_statistics_node_update>
-#define OSET(S) OMAP(S,null_type)
+template<class S,class T> using omap = __gnu_pbds::tree<S,T,less<S>,__gnu_pbds::rb_tree_tag,__gnu_pbds::tree_order_statistics_node_update>;
+template<class T> using oset = omap<T,__gnu_pbds::null_type>;
+template<class T> using rope = __gnu_cxx::rope<T>;
 #define all(v) begin(v),end(v)
 #define sortu(v) (sort(all(v)), (v).resize(unique(all(v))-begin(v)))
 const int e0=1, e1=10, e2=100, e3=1000;
 const int e4=10*e3, e5=100*e3, e6=1000*e3;
 const int e7=10*e6, e8=100*e6, e9=1000*e6;
 const long double tau=2*acosl(-1);
-// END AUTOFOLD }}}
-// #include <bits/extc++.h>
-// using namespace __gnu_pbds;
-#if OJ
-#define dbg(...) cerr
-#else
-#define dbg _gbd
-#endif
 typedef __uint128_t ulll;
 typedef __int128_t lll;
 typedef unsigned long long ull;
 typedef long long ll;
 typedef long double ld; //CARE
-typedef complex<ld> pt;
 const ld eps=(ld)1e-8;
 const int inf=e9+99;
 const ll linf=1LL*e9*e9+99;
+#if OJ
+#define dbg(...) cerr
+#else
+#define dbg _gbd
+#endif
+// END AUTOFOLD }}}
 const int P=e9+7;
-
 
 
 
