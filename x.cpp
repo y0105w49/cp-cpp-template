@@ -4,6 +4,13 @@
   // sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars
   // ayy lamo
   */
+#ifdef ARST
+#define JO 1
+#define OJ 0
+#else
+#define JO 0
+#define OJ 1
+#endif
 // #include <bits/stdc++.h>
 #include <bits/extc++.h>
 using namespace std;
@@ -104,24 +111,17 @@ namespace gbd_ns {
 		return oss.str();
 	}
 }
-#define _gbd(...) gbd_ns::_gbd1(cerr<<__FILE__<<":"<<__LINE__<<":  ",#__VA_ARGS__,__VA_ARGS__)<<endl
+#define dbg(...) do { if constexpr(JO) gbd_ns::_gbd1(cerr<<__FILE__<<":"<<__LINE__<<":  ",#__VA_ARGS__,__VA_ARGS__)<<endl; } while(0)
 #define fmt(...) gbd_ns::_gbd1(#__VA_ARGS__,__VA_ARGS__)
-#ifdef ARST
-#define JO 1
-#define OJ 0
-#else
-#define JO 0
-#define OJ 1
-#endif
 template<class Fun> struct _y_combinator_result {
 	Fun _fun;
-	template<class T> explicit _y_combinator_result(T &&fun) : _fun(std::forward<T>(fun)) {}
+	template<class T> explicit _y_combinator_result(T &&fun) : _fun(forward<T>(fun)) {}
 	template<typename... Args> decltype(auto) operator()(Args &&... args) {
-		return _fun(std::ref(*this),std::forward<Args>(args)...);
+		return _fun(ref(*this),forward<Args>(args)...);
 	}
 };
-template<class Fun> decltype(auto) FIX(Fun &&fun) {
-	return _y_combinator_result<std::decay_t<Fun>>(std::forward<Fun>(fun));
+template<class Fun> [[nodiscard]] decltype(auto) FIX(Fun &&fun) {
+	return _y_combinator_result<decay_t<Fun>>(forward<Fun>(fun));
 }
 inline void nop() {}
 #define sz(x) (int((x).size()))
@@ -138,22 +138,41 @@ template<class T> using rope = __gnu_cxx::rope<T>;
 const int e0=1, e1=10, e2=100, e3=1000;
 const int e4=10*e3, e5=100*e3, e6=1000*e3;
 const int e7=10*e6, e8=100*e6, e9=1000*e6;
-const long double tau=2*acosl(-1);
+const long long e12=1LL*e3*e9, e15=1LL*e6*e9, e18=1LL*e9*e9;
 typedef __uint128_t ulll;
 typedef __int128_t lll;
 typedef unsigned long long ull;
 typedef long long ll;
-typedef long double ld; //CARE
-const ld eps=(ld)1e-8;
+uint64_t START_TIME;
+inline uint64_t now_μs() { return chrono::duration_cast<chrono::microseconds>(chrono::system_clock::now().time_since_epoch()).count()-START_TIME; }
+#define timed(cb) do { dbg("timing "#cb"..."); uint64_t μs=now_μs(); cb; μs=now_μs()-μs; dbg("running "#cb" took",μs); } while(0)
+int gen; bool inp; int seed; vector<char *> args;
+mt19937 gen_input,gen_actual;
+template<class T> T irand(const T &l,const T &r) { return uniform_int_distribution<T>(l,r)(gen_input); }
+template<class T> T irand(const T &n) { return irand(T(1),n); }
+template<class T> T rand(const T &l,const T &r) { return uniform_int_distribution<T>(l,r)(gen_actual); }
+template<class T> T rand(const T &n) { return rand(T(1),n); }
+[[deprecated]] int rand() { return rand(0,numeric_limits<int>::max()); }
+void _main();
+int32_t main([[maybe_unused]]int argc,[[maybe_unused]]char *argv[]) {
+	START_TIME=chrono::duration_cast<chrono::microseconds>(chrono::system_clock::now().time_since_epoch()).count();
+	gen=0; seed=int(START_TIME%e5);
+	if(argc>=2) gen=atoi(argv[1]);
+	if(argc>=3) seed=atoi(argv[2]), args={argv+3,argv+argc};
+	inp=!gen;
+	gen_input.seed(seed*2+1); gen_actual.seed(seed*2+2);
+	dbg(seed,gen,args);
+	_main();
+	uint64_t μs=now_μs();
+	char duration[32]; sprintf(duration,"%llu.%02llus",μs/e6,(μs%e6)/e4); dbg(duration);
+}
+typedef double flt; //CARE
+const flt ε=(flt)1e-8;
+const flt τ=(flt)acosl(-1);
 const int inf=e9+99;
 const ll linf=1LL*e9*e9+99;
-#if OJ
-#define dbg(...) cerr
-#else
-#define dbg _gbd
-#endif
 // END AUTOFOLD }}}
-const int P=e9+7;
+const int P=e9+7;//998'244'353;
 
 
 
@@ -161,9 +180,9 @@ const int P=e9+7;
 
 
 
-
-
-
-int32_t main() { /* CURSOR START */
+void _main() { /* CURSOR START */
 	
 }
+
+
+
