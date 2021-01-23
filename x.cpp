@@ -153,11 +153,16 @@ template<class T> T irand(const T &n) { return irand(T(1),n); }
 template<class T> T rand(const T &l,const T &r) { return uniform_int_distribution<T>(l,r)(gen_actual); }
 template<class T> T rand(const T &n) { return rand(T(1),n); }
 [[deprecated]] int rand() { return rand(0,numeric_limits<int>::max()); }
+#define endl '\n'
 void _main();
 int32_t main([[maybe_unused]]int argc,[[maybe_unused]]char *argv[]) {
 	START_TIME=chrono::duration_cast<chrono::microseconds>(chrono::system_clock::now().time_since_epoch()).count();
+	ios_base::sync_with_stdio(0); cin.tie(0);
 	gen=0; seed=int(START_TIME%e5);
-	if(argc>=2) gen=atoi(argv[1]);
+	if(argc>=2) {
+		if(*argv[1]=='i') freopen((string(__FILE__).substr(0,string(__FILE__).find('.'))+"."+string(argv[1]+1)+".in").c_str(),"r",stdin);
+		else gen=atoi(argv[1]);
+	}
 	if(argc>=3) seed=atoi(argv[2]), args={argv+3,argv+argc};
 	inp=!gen;
 	gen_input.seed(seed*2+1); gen_actual.seed(seed*2+2);
@@ -173,6 +178,9 @@ const int inf=e9+99;
 const ll linf=1LL*e9*e9+99;
 // END AUTOFOLD }}}
 const int P=e9+7;//998'244'353;
+
+
+
 
 
 
