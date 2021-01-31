@@ -4,6 +4,9 @@
   // sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars
   // ayy lamo
   */
+// #include <bits/stdc++.h>
+#include <bits/extc++.h>
+using namespace std;
 #ifdef ARST
 #define JO 1
 #define OJ 0
@@ -11,9 +14,6 @@
 #define JO 0
 #define OJ 1
 #endif
-// #include <bits/stdc++.h>
-#include <bits/extc++.h>
-using namespace std;
 namespace gbd_ns {
 	template<typename C>
 	struct is_iterable {
@@ -130,21 +130,21 @@ inline void nop() {}
 #define se second
 #define pb push_back
 #define eb emplace_back
-template<class S,class T> using omap = __gnu_pbds::tree<S,T,less<S>,__gnu_pbds::rb_tree_tag,__gnu_pbds::tree_order_statistics_node_update>;
-template<class T> using oset = omap<T,__gnu_pbds::null_type>;
-template<class T> using rope = __gnu_cxx::rope<T>;
+template<class S,class T> using omap=__gnu_pbds::tree<S,T,less<S>,__gnu_pbds::rb_tree_tag,__gnu_pbds::tree_order_statistics_node_update>;
+template<class T> using oset=omap<T,__gnu_pbds::null_type>;
+template<class T> using rope=__gnu_cxx::rope<T>;
 #define all(v) begin(v),end(v)
 #define sortu(v) (sort(all(v)), (v).resize(unique(all(v))-begin(v)))
 const int e0=1, e1=10, e2=100, e3=1000;
 const int e4=10*e3, e5=100*e3, e6=1000*e3;
 const int e7=10*e6, e8=100*e6, e9=1000*e6;
 const long long e12=1LL*e3*e9, e15=1LL*e6*e9, e18=1LL*e9*e9;
-typedef __uint128_t ulll;
-typedef __int128_t lll;
-typedef unsigned long long ull;
-typedef long long ll;
+using ulll=__uint128_t;
+using lll=__int128_t;
+using ull=uint64_t;
+using ll=int64_t;
 uint64_t START_TIME;
-inline uint64_t now_μs() { return chrono::duration_cast<chrono::microseconds>(chrono::system_clock::now().time_since_epoch()).count()-START_TIME; }
+inline uint64_t now_μs() { return chrono::duration_cast<chrono::microseconds>(chrono::steady_clock::now().time_since_epoch()).count()-START_TIME; }
 #define timed(cb) do { dbg("timing "#cb"..."); uint64_t μs=now_μs(); cb; μs=now_μs()-μs; dbg("running "#cb" took",μs); } while(0)
 int gen; bool inp; int seed; vector<char *> args;
 mt19937 gen_input,gen_actual;
@@ -156,9 +156,9 @@ template<class T> T rand(const T &n) { return rand(T(1),n); }
 #define endl '\n'
 void _main();
 int32_t main([[maybe_unused]]int argc,[[maybe_unused]]char *argv[]) {
-	START_TIME=chrono::duration_cast<chrono::microseconds>(chrono::system_clock::now().time_since_epoch()).count();
+	START_TIME=chrono::duration_cast<chrono::microseconds>(chrono::steady_clock::now().time_since_epoch()).count();
 	ios_base::sync_with_stdio(0); cin.tie(0);
-	gen=0; seed=int(START_TIME%e5);
+	gen=0; seed=int(OJ?START_TIME:START_TIME%e5);
 	if(argc>=2) {
 		if(*argv[1]=='i') freopen((string(__FILE__).substr(0,string(__FILE__).find('.'))+"."+string(argv[1]+1)+".in").c_str(),"r",stdin);
 		else gen=atoi(argv[1]);
@@ -171,7 +171,7 @@ int32_t main([[maybe_unused]]int argc,[[maybe_unused]]char *argv[]) {
 	uint64_t μs=now_μs();
 	char duration[32]; sprintf(duration,"%llu.%02llus",μs/e6,(μs%e6)/e4); dbg(duration);
 }
-typedef double flt; //CARE
+using flt=double; //CARE
 const flt ε=(flt)1e-8;
 const flt τ=(flt)acosl(-1);
 const int inf=e9+99;
