@@ -141,11 +141,11 @@ const int e7=10*e6, e8=100*e6, e9=1000*e6;
 const long long e12=1LL*e3*e9, e15=1LL*e6*e9, e18=1LL*e9*e9;
 using ulll=__uint128_t;
 using lll=__int128_t;
-using ull=uint64_t;
-using ll=int64_t;
-uint64_t START_TIME;
-inline uint64_t now_μs() { return chrono::duration_cast<chrono::microseconds>(chrono::steady_clock::now().time_since_epoch()).count()-START_TIME; }
-#define timed(cb) do { dbg("timing "#cb"..."); uint64_t μs=now_μs(); cb; μs=now_μs()-μs; dbg("running "#cb" took",μs); } while(0)
+using ull=unsigned long long;
+using ll=long long;
+unsigned long long START_TIME;
+inline unsigned long long now_μs() { return chrono::duration_cast<chrono::microseconds>(chrono::steady_clock::now().time_since_epoch()).count()-START_TIME; }
+#define timed(cb) do { dbg("timing "#cb"..."); unsigned long long μs=now_μs(); cb; μs=now_μs()-μs; dbg("running "#cb" took",μs); } while(0)
 int gen; bool inp; int seed; vector<char *> args;
 mt19937 gen_input,gen_actual;
 template<class T> T irand(const T &l,const T &r) { return uniform_int_distribution<T>(l,r)(gen_input); }
@@ -168,7 +168,7 @@ int32_t main([[maybe_unused]]int argc,[[maybe_unused]]char *argv[]) {
 	gen_input.seed(seed*2+1); gen_actual.seed(seed*2+2);
 	dbg(seed,gen,args);
 	_main();
-	uint64_t μs=now_μs();
+	unsigned long long μs=now_μs();
 	char duration[32]; sprintf(duration,"%llu.%02llus",μs/e6,(μs%e6)/e4); dbg(duration);
 }
 using flt=double; //CARE
