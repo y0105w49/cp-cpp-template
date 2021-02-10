@@ -1,9 +1,5 @@
-// BEGIN AUTOFOLD {{{
-/*NOSUCHFILE
-  cat
-  // sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars// sixteen chars
-  // ayy lamo
-  */
+// {{{ y0105w49 template 21G10
+// hi mom
 // #include <bits/stdc++.h>
 #include <bits/extc++.h>
 using namespace std;
@@ -176,7 +172,7 @@ const flt ε=(flt)1e-8;
 const flt τ=(flt)acosl(-1);
 const int inf=e9+99;
 const ll linf=1LL*e9*e9+99;
-// END AUTOFOLD }}}
+// }}}
 const int P=e9+7;//998'244'353;
 
 
