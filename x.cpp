@@ -10,6 +10,13 @@ using namespace std;
 #define JO 0
 #define OJ 1
 #endif
+#define STR(x) #x
+#define GCCDIAG(s) _Pragma(STR(GCC diagnostic s)) static_assert(true)
+#define Wsave GCCDIAG(push)
+#define Wpop GCCDIAG(pop)
+#define Wsupp(w) GCCDIAG(ignored "-W" w)
+#define Wpush(w) Wsave; Wsupp(w)
+#define typeof __typeof__
 namespace gbd_ns {
 	template<typename C>
 	struct is_iterable {
