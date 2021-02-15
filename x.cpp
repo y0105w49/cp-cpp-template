@@ -1,4 +1,4 @@
-// {{{ y0105w49 template 21G10
+// {{{ y0105w49 template 21G14
 // hi mom
 // #include <bits/stdc++.h>
 #include <bits/extc++.h>
@@ -114,7 +114,8 @@ namespace gbd_ns {
 		return oss.str();
 	}
 }
-#define dbg(...) do { if constexpr(JO) gbd_ns::_gbd1(cerr<<__FILE__<<":"<<__LINE__<<":  ",#__VA_ARGS__,__VA_ARGS__)<<endl; } while(0)
+bool DBG=1,EMACS=0;
+#define dbg(...) (JO&&DBG?gbd_ns::_gbd1(cerr<<"\033[38;5;5m"<<__FILE__<<":"<<__LINE__<<(EMACS?":note: ":": "),#__VA_ARGS__,__VA_ARGS__)<<"\033[0m"<<endl:cerr)
 #define fmt(...) gbd_ns::_gbd1(#__VA_ARGS__,__VA_ARGS__)
 template<class Fun> struct _y_combinator_result {
 	Fun _fun;
@@ -148,7 +149,8 @@ using ull=unsigned long long;
 using ll=long long;
 unsigned long long START_TIME;
 inline unsigned long long now_μs() { return chrono::duration_cast<chrono::microseconds>(chrono::steady_clock::now().time_since_epoch()).count()-START_TIME; }
-#define timed(cb) do { dbg("timing "#cb"..."); unsigned long long μs=now_μs(); cb; μs=now_μs()-μs; dbg("running "#cb" took",μs); } while(0)
+const char *fmt_time(unsigned long long μs) { static char dur[19]; sprintf(dur,"%llu.%02llus",μs/e6,(μs%e6)/e4); return dur; }
+#define timed(cb) do { dbg("timed "#cb" ..."); unsigned long long start=now_μs(); cb; dbg("timed "#cb" took",fmt_time(now_μs()-start)); } while(0)
 int gen; bool inp; int seed; vector<char *> args;
 mt19937 gen_input,gen_actual;
 template<class T> T irand(const T &l,const T &r) { return uniform_int_distribution<T>(l,r)(gen_input); }
@@ -169,10 +171,10 @@ int32_t main([[maybe_unused]]int argc,[[maybe_unused]]char *argv[]) {
 	if(argc>=3) seed=atoi(argv[2]), args={argv+3,argv+argc};
 	inp=!gen;
 	gen_input.seed(seed*2+1); gen_actual.seed(seed*2+2);
+	if(getenv("EMACS")) EMACS=1;
 	dbg(seed,gen,args);
 	_main();
-	unsigned long long μs=now_μs();
-	char duration[32]; sprintf(duration,"%llu.%02llus",μs/e6,(μs%e6)/e4); dbg(duration);
+	dbg("finished in",fmt_time(now_μs()));
 }
 using flt=double; //CARE
 const flt ε=(flt)1e-8;
