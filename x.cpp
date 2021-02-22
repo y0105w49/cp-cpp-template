@@ -1,4 +1,4 @@
-// {{{ y0105w49 template 21G14
+// {{{ y0105w49 template 21G21
 // hi mom
 // #include <bits/stdc++.h>
 #include <bits/extc++.h>
@@ -151,7 +151,7 @@ unsigned long long START_TIME;
 inline unsigned long long now_μs() { return chrono::duration_cast<chrono::microseconds>(chrono::steady_clock::now().time_since_epoch()).count()-START_TIME; }
 const char *fmt_time(unsigned long long μs) { static char dur[19]; sprintf(dur,"%llu.%02llus",μs/e6,(μs%e6)/e4); return dur; }
 #define timed(cb) do { dbg("timed "#cb" ..."); unsigned long long start=now_μs(); cb; dbg("timed "#cb" took",fmt_time(now_μs()-start)); } while(0)
-int gen; bool inp; int seed; vector<char *> args;
+int gen; bool inp; int seed; vector<string> args;
 mt19937 gen_input,gen_actual;
 template<class T> T irand(const T &l,const T &r) { return uniform_int_distribution<T>(l,r)(gen_input); }
 template<class T> T irand(const T &n) { return irand(T(1),n); }
@@ -168,7 +168,7 @@ int32_t main([[maybe_unused]]int argc,[[maybe_unused]]char *argv[]) {
 		if(*argv[1]=='i') freopen((string(__FILE__).substr(0,string(__FILE__).find('.'))+"."+string(argv[1]+1)+".in").c_str(),"r",stdin);
 		else gen=atoi(argv[1]);
 	}
-	if(argc>=3) seed=atoi(argv[2]), args={argv+3,argv+argc};
+	if(argc>=3) { if(*argv[2]!='.') seed=atoi(argv[2]); for(int i=3;i<argc;i++) args.pb(argv[i]); }
 	inp=!gen;
 	gen_input.seed(seed*2+1); gen_actual.seed(seed*2+2);
 	if(getenv("EMACS")) EMACS=1;
