@@ -1,4 +1,4 @@
-// {{{ y0105w49 template 21G21
+// {{{ y0105w49 template 21J08
 // hi mom
 // #include <bits/stdc++.h>
 #include <bits/extc++.h>
@@ -127,7 +127,7 @@ template<class Fun> struct _y_combinator_result {
 template<class Fun> [[nodiscard]] decltype(auto) FIX(Fun &&fun) {
 	return _y_combinator_result<decay_t<Fun>>(forward<Fun>(fun));
 }
-inline void nop() {}
+#define nop void()
 #define sz(x) (int((x).size()))
 #define eprintf(...) fprintf(stderr,__VA_ARGS__)
 #define fi first
@@ -149,7 +149,7 @@ using ull=unsigned long long;
 using ll=long long;
 unsigned long long START_TIME;
 inline unsigned long long now_μs() { return chrono::duration_cast<chrono::microseconds>(chrono::steady_clock::now().time_since_epoch()).count()-START_TIME; }
-const char *fmt_time(unsigned long long μs) { static char dur[19]; sprintf(dur,"%llu.%02llus",μs/e6,(μs%e6)/e4); return dur; }
+const char *fmt_time(unsigned long long μs=now_μs()) { static char dur[19]; sprintf(dur,"%llu.%02llus",μs/e6,(μs%e6)/e4); return dur; }
 #define timed(cb) do { dbg("timed "#cb" ..."); unsigned long long start=now_μs(); cb; dbg("timed "#cb" took",fmt_time(now_μs()-start)); } while(0)
 int gen; bool inp; int seed; vector<string> args;
 mt19937 gen_input,gen_actual;
@@ -158,23 +158,26 @@ template<class T> T irand(const T &n) { return irand(T(1),n); }
 template<class T> T rand(const T &l,const T &r) { return uniform_int_distribution<T>(l,r)(gen_actual); }
 template<class T> T rand(const T &n) { return rand(T(1),n); }
 [[deprecated]] int rand() { return rand(0,numeric_limits<int>::max()); }
+#define in(x,e) (inp?cin>>(x),nop:((x)=(e),nop))
+#define inr(x,...) in(x,irand(__VA_ARGS__))
 #define endl '\n'
 void _main();
 int32_t main([[maybe_unused]]int argc,[[maybe_unused]]char *argv[]) {
 	START_TIME=chrono::duration_cast<chrono::microseconds>(chrono::steady_clock::now().time_since_epoch()).count();
 	ios_base::sync_with_stdio(0); cin.tie(0);
 	gen=0; seed=int(OJ?START_TIME:START_TIME%e5);
-	if(argc>=2) {
-		if(*argv[1]=='i') freopen((string(__FILE__).substr(0,string(__FILE__).find('.'))+"."+string(argv[1]+1)+".in").c_str(),"r",stdin);
-		else gen=atoi(argv[1]);
+	args={argv,argv+argc};
+	if(sz(args)>1) {
+		if(args[1][0]=='i') freopen((string(__FILE__).substr(0,string(__FILE__).find('.'))+"."+args[1].substr(1)+".in").c_str(),"r",stdin);
+		else gen=stoi(args[1]);
 	}
-	if(argc>=3) { if(*argv[2]!='.') seed=atoi(argv[2]); for(int i=3;i<argc;i++) args.pb(argv[i]); }
+	if(sz(args)>2 && args[2][0]!='.') seed=stoi(args[2]);
 	inp=!gen;
 	gen_input.seed(seed*2+1); gen_actual.seed(seed*2+2);
 	if(getenv("EMACS")) EMACS=1;
 	dbg(seed,gen,args);
 	_main();
-	dbg("finished in",fmt_time(now_μs()));
+	dbg("finished in",fmt_time());
 }
 using flt=double; //CARE
 const flt ε=(flt)1e-8;
