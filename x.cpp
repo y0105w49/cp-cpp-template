@@ -1,4 +1,4 @@
-// {{{ y0105w49 template 21J08
+// {{{ y0105w49 template 21J24
 // hi mom
 // #include <bits/stdc++.h>
 #include <bits/extc++.h>
@@ -124,12 +124,15 @@ template<class Fun> struct _y_combinator_result {
 		return _fun(ref(*this),forward<Args>(args)...);
 	}
 };
-template<class Fun> [[nodiscard]] decltype(auto) FIX(Fun &&fun) {
+template<class Fun> [[nodiscard]] decltype(auto) fix(Fun &&fun) {
 	return _y_combinator_result<decay_t<Fun>>(forward<Fun>(fun));
 }
 #define nop void()
 #define sz(x) (int((x).size()))
-#define eprintf(...) fprintf(stderr,__VA_ARGS__)
+#define all(v) begin(v),end(v)
+#define sortu(v) (sort(all(v)), (v).resize(unique(all(v))-begin(v)))
+#define enum(i,...) for(int i:{-1}) for(__VA_ARGS__) if(++i,0) assert(0); else
+#define get(x,i) get<i>(x)
 #define fi first
 #define se second
 #define pb push_back
@@ -137,8 +140,6 @@ template<class Fun> [[nodiscard]] decltype(auto) FIX(Fun &&fun) {
 template<class S,class T> using omap=__gnu_pbds::tree<S,T,less<S>,__gnu_pbds::rb_tree_tag,__gnu_pbds::tree_order_statistics_node_update>;
 template<class T> using oset=omap<T,__gnu_pbds::null_type>;
 template<class T> using rope=__gnu_cxx::rope<T>;
-#define all(v) begin(v),end(v)
-#define sortu(v) (sort(all(v)), (v).resize(unique(all(v))-begin(v)))
 const int e0=1, e1=10, e2=100, e3=1000;
 const int e4=10*e3, e5=100*e3, e6=1000*e3;
 const int e7=10*e6, e8=100*e6, e9=1000*e6;
