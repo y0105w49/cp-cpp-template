@@ -1,4 +1,4 @@
-// {{{ y0105w49 template 21J24
+// {{{ y0105w49 template 21K03
 // hi mom
 // #include <bits/stdc++.h>
 #include <bits/extc++.h>
@@ -23,9 +23,9 @@ namespace gbd_ns {
 		template<class T> static long check(...);
 		template<class T> static char check(int,typename T::const_iterator = C().end());
 		enum {
-		value = sizeof(check<C>(0)) == sizeof(char),
-		neg_value = sizeof(check<C>(0)) != sizeof(char)
-	};
+			value = sizeof(check<C>(0)) == sizeof(char),
+			neg_value = sizeof(check<C>(0)) != sizeof(char)
+		};
 	};
 	template<bool B,typename T=void> using eit=typename enable_if<B,T>::type;
 	template<class T> struct _gbd3C;
@@ -131,7 +131,9 @@ template<class Fun> [[nodiscard]] decltype(auto) fix(Fun &&fun) {
 #define sz(x) (int((x).size()))
 #define all(v) begin(v),end(v)
 #define sortu(v) (sort(all(v)), (v).resize(unique(all(v))-begin(v)))
-#define enum(i,...) for(int i:{-1}) for(__VA_ARGS__) if(++i,0) assert(0); else
+#define forenum(i,...) for(int i:{-1}) for(__VA_ARGS__) if(++i,0) assert(0); else
+#define forenumll(i,...) for(long long i:{-1}) for(__VA_ARGS__) if(++i,0) assert(0); else
+#define forbs(k,i,bs) for(ptrdiff_t k=0,i=(bs)._Find_first();i<(ptrdiff_t)(bs).size();i=(bs)._Find_next(i),++k)
 #define get(x,i) get<i>(x)
 #define fi first
 #define se second
@@ -162,6 +164,7 @@ template<class T> T rand(const T &n) { return rand(T(1),n); }
 #define in(x,e) (inp?cin>>(x),nop:((x)=(e),nop))
 #define inr(x,...) in(x,irand(__VA_ARGS__))
 #define endl '\n'
+void exit0() { dbg("finished (early) in",fmt_time()); exit(0); }
 void _main();
 int32_t main([[maybe_unused]]int argc,[[maybe_unused]]char *argv[]) {
 	START_TIME=chrono::duration_cast<chrono::microseconds>(chrono::steady_clock::now().time_since_epoch()).count();
