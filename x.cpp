@@ -1,4 +1,4 @@
-// {{{ y0105w49 template 21K03
+// {{{ y0105w49 template 21K10
 // hi mom
 // #include <bits/stdc++.h>
 #include <bits/extc++.h>
@@ -161,6 +161,7 @@ template<class T> T irand(const T &n) { return irand(T(1),n); }
 template<class T> T rand(const T &l,const T &r) { return uniform_int_distribution<T>(l,r)(gen_actual); }
 template<class T> T rand(const T &n) { return rand(T(1),n); }
 [[deprecated]] int rand() { return rand(0,numeric_limits<int>::max()); }
+#define random_shuffle(...) static_assert(false,"random_shuffle deprecated, use shuffle")
 #define in(x,e) (inp?cin>>(x),nop:((x)=(e),nop))
 #define inr(x,...) in(x,irand(__VA_ARGS__))
 #define endl '\n'
@@ -185,7 +186,7 @@ int32_t main([[maybe_unused]]int argc,[[maybe_unused]]char *argv[]) {
 }
 using flt=double; //CARE
 const flt ε=(flt)1e-8;
-const flt τ=(flt)acosl(-1);
+const flt τ=(flt)(2*acosl(-1));
 const int inf=e9+99;
 const ll linf=1LL*e9*e9+99;
 // }}}
