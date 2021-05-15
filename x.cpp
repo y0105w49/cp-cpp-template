@@ -1,4 +1,4 @@
-// {{{ y0105w49 template 21K10
+// {{{ y0105w49 template 21K14
 // hi mom
 // #include <bits/stdc++.h>
 #include <bits/extc++.h>
@@ -27,7 +27,6 @@ namespace gbd_ns {
 			neg_value = sizeof(check<C>(0)) != sizeof(char)
 		};
 	};
-	template<bool B,typename T=void> using eit=typename enable_if<B,T>::type;
 	template<class T> struct _gbd3C;
 	template<class T> ostream &_gbd3(ostream &os,const T &x) {
 		return _gbd3C<T>::call(os,x);
@@ -71,14 +70,14 @@ namespace gbd_ns {
 	}
 	template<class T> struct _gbd3C {
 		template<class U=T>
-		static ostream &call(ostream &os,eit<is_iterable<U>::value,const T> &V) {
+		static ostream &call(ostream &os,enable_if_t<is_iterable<U>::value,const T> &V) {
 			os<<"{";
 			bool ff=0;
 			for(const auto &E:V) _gbd35<decltype(E)>(ff?os<<",":os,E), ff=1;
 			return os<<"}";
 		}
 		template<class U=T>
-		static ostream &call(ostream &os,eit<is_iterable<U>::neg_value,const T> &x) {
+		static ostream &call(ostream &os,enable_if_t<is_iterable<U>::neg_value,const T> &x) {
 			return _gbd4(os,x);
 		}
 	};
@@ -135,6 +134,10 @@ template<class Fun> [[nodiscard]] decltype(auto) fix(Fun &&fun) {
 #define forenumll(i,...) for(long long i:{-1}) for(__VA_ARGS__) if(++i,0) assert(0); else
 #define forbs(k,i,bs) for(ptrdiff_t k=0,i=(bs)._Find_first();i<(ptrdiff_t)(bs).size();i=(bs)._Find_next(i),++k)
 #define get(x,i) get<i>(x)
+template<class T> bool inb(const T &x,const T &l,const T &r) { return l<=x&&x<=r; }
+#define assin(x,l,r) assert(inb(x,l,r))
+template<class T> vector<T> vec(initializer_list<T> v) { return v; }
+template<class T> vector<T> vec(vector<T> v) { return v; }
 #define fi first
 #define se second
 #define pb push_back
@@ -154,33 +157,38 @@ unsigned long long START_TIME;
 inline unsigned long long now_μs() { return chrono::duration_cast<chrono::microseconds>(chrono::steady_clock::now().time_since_epoch()).count()-START_TIME; }
 const char *fmt_time(unsigned long long μs=now_μs()) { static char dur[19]; sprintf(dur,"%llu.%02llus",μs/e6,(μs%e6)/e4); return dur; }
 #define timed(cb) do { dbg("timed "#cb" ..."); unsigned long long start=now_μs(); cb; dbg("timed "#cb" took",fmt_time(now_μs()-start)); } while(0)
-int gen; bool inp; int seed; vector<string> args;
-mt19937 gen_input,gen_actual;
-template<class T> T irand(const T &l,const T &r) { return uniform_int_distribution<T>(l,r)(gen_input); }
-template<class T> T irand(const T &n) { return irand(T(1),n); }
-template<class T> T rand(const T &l,const T &r) { return uniform_int_distribution<T>(l,r)(gen_actual); }
-template<class T> T rand(const T &n) { return rand(T(1),n); }
-[[deprecated]] int rand() { return rand(0,numeric_limits<int>::max()); }
+int arg1; bool inp; int seed; vector<string> args;
+mt19937 geni,gen;
+#define irand(...) _rand(geni,__VA_ARGS__)
+#define rand(...) _rand(gen,__VA_ARGS__)
+template<class T> enable_if_t<numeric_limits<T>::is_integer,T> _rand(mt19937 &g,T l,T r) { return uniform_int_distribution<T>(l,r)(g); }
+template<class T> enable_if_t<numeric_limits<T>::is_integer,T> _rand(mt19937 &g,T n) { return _rand(g,T(1),n); }
+[[deprecated]] int _rand(mt19937 &g) { return _rand(g,0,numeric_limits<int>::max()); }
+template<class T> enable_if_t<numeric_limits<T>::is_iec559,T> _rand(mt19937 &g,T l,T r) { return uniform_real_distribution<T>(l,r)(g); }
+bool _rand(mt19937 &g,double p) { return bernoulli_distribution(p)(g); }
+template<class T> T _rand(mt19937 &g,initializer_list<T> il) { return *(il.begin()+_rand(g,0,(int)il.size()-1)); }
+template<class T> T _rand(mt19937 &g,double p,T a,T b) { return _rand(g,p)?a:b; }
+template<class T> T _rand(mt19937 &g,initializer_list<T> il,initializer_list<double> wt) { assert(il.size()==wt.size()); return *(il.begin()+discrete_distribution(wt)(g)); }
 #define random_shuffle(...) static_assert(false,"random_shuffle deprecated, use shuffle")
-#define in(x,e) (inp?cin>>(x),nop:((x)=(e),nop))
-#define inr(x,...) in(x,irand(__VA_ARGS__))
+#define ine(x,e) (inp?cin>>(x),nop:((x)=(e),nop))
+#define inr(x,...) (inp?cin>>(x),nop:((x)=irand(__VA_ARGS__),nop))
 #define endl '\n'
 void exit0() { dbg("finished (early) in",fmt_time()); exit(0); }
 void _main();
 int32_t main([[maybe_unused]]int argc,[[maybe_unused]]char *argv[]) {
 	START_TIME=chrono::duration_cast<chrono::microseconds>(chrono::steady_clock::now().time_since_epoch()).count();
 	ios_base::sync_with_stdio(0); cin.tie(0);
-	gen=0; seed=int(OJ?START_TIME:START_TIME%e5);
+	arg1=0; seed=int(OJ?START_TIME:START_TIME%e5);
 	args={argv,argv+argc};
 	if(sz(args)>1) {
 		if(args[1][0]=='i') freopen((string(__FILE__).substr(0,string(__FILE__).find('.'))+"."+args[1].substr(1)+".in").c_str(),"r",stdin);
-		else gen=stoi(args[1]);
+		else arg1=stoi(args[1]);
 	}
 	if(sz(args)>2 && args[2][0]!='.') seed=stoi(args[2]);
-	inp=!gen;
-	gen_input.seed(seed*2+1); gen_actual.seed(seed*2+2);
+	inp=!arg1;
+	geni.seed((unsigned)seed<<1); gen.seed((unsigned)seed<<1|1);
 	if(getenv("EMACS")) EMACS=1;
-	dbg(seed,gen,args);
+	dbg(arg1,seed,args);
 	_main();
 	dbg("finished in",fmt_time());
 }
